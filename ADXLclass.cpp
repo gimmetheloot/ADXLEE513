@@ -57,13 +57,9 @@ short ADXLclass::addlsbmsb(char msb, char lsb){
 }
 
 
-//function that reads the chip on the pi, first connects by checkng the device id, if its the wrong id it gives out an error. The function then calls the addlsbmsb function to calculate the values of the acceleration of each axis
+//function that reads the chip on the pi.The function then calls the addlsbmsb function to calculate the values of the acceleration of each axis
 int ADXLclass::readpi(){
-	this->reg = this->readreg(BUFFER_SIZE, 0x00);
-	if(*this->reg!=0xe5){
-		perror("ADXL345: Failure Condition - Sensor ID not Verified");
-		return -1;
-	}
+	
 	this->accX = this->addlsbmsb(*(reg+DATAX1), *(reg+DATAX0));
 	this->accY = this->addlsbmsb(*(reg+DATAY1), *(reg+DATAY0));
 	this->accZ = this->addlsbmsb(*(reg+DATAZ1), *(reg+DATAZ0));	
